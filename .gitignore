@@ -1,0 +1,8 @@
+.jshintrc
+node_modules/*
+*.log
+.*
+!/.gitignore
+config/config.js
+bower_components
+dist

@@ -1,0 +1,23 @@
+{
+  "name": "carsGame",
+  "version": "0.0.1",
+  "homepage": "git+https://github.com/Trebh/cars-client.git",
+  "authors": [
+    "Riccardo Agnoletto <agnolettoriccardo@gmail.com>"
+  ],
+  "description": "simple client for a racing cars game",
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.4.8",
+    "angular-cookies": "1.4.8",
+    "angular-ui-router": "0.2.15"
+  }
+}

@@ -1,0 +1,11 @@
+%body
+  .home__container
+    {{home.title}}
+    
+    .home__budgetTestContainer
+      %input{type: "text", label: "name", ng-model: "home.name"}
+      %input{type: "text", label: "amount", ng-model: "home.amount"}
+      %input{type: "date", label: "timeStart", ng-model: "home.timeStart"}
+      %input{type: "date", label: "timeEnd", ng-model: "home.timeEnd"}
+      %button{ng-click: "home.createBudget(home.name, home.amount, home.timeStart, home.timeEnd)"}
+        crea budget
