@@ -20,6 +20,18 @@ exports.getExpense = function(req, res) {
 };
 
 exports.createBudget = function(req, res) {
+
+  req.assert('name', 'Input Error').isAscii().isAlphanumeric();
+  req.assert('amount', 'Input Error').notEmpty().isInt();
+  req.assert('timeStart', 'Input Error').isDate();
+  req.assert('timeEnd', 'Input Error').isDate();
+
+  var errors = req.validationErrors();
+  if (errors) {
+    res.status(400).send(errors);
+    return;
+  }
+
   var budget = new Budget();
   budget.name = req.body.name;
   budget.amount = req.body.amount;
