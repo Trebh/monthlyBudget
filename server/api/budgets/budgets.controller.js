@@ -1,6 +1,8 @@
 'use strict';
 
 var Budget = require('../../model/budget').model;
+var Expense = require('../../model/expense').model;
+
 var R = require('ramda');
 
 exports.search = function(req, res) {
@@ -8,7 +10,6 @@ exports.search = function(req, res) {
 };
 
 exports.getBudget = function(req, res) {
-
 };
 
 exports.getBudgetExpenses = function(req, res) {
@@ -58,6 +59,39 @@ exports.createBudget = function(req, res) {
 };
 
 exports.addExpense = function(req, res) {
+
+  req.assert('name', 'Input Error').isAscii().isAlphanumeric();
+  req.assert('amount', 'Input Error').notEmpty().isInt();
+  req.assert('user', 'Input Error').optional().isAscii().isAlphanumeric();
+  req.assert('dateRef', 'Input Error').optional().isDate();
+  req.assert('budget', 'Input Error').isAscii().isAlphanumeric();
+  req.assert('note', 'Input Error').optional().isAscii().isAlphanumeric();
+
+  var errors = req.validationErrors();
+  if (errors) {
+    res.status(400).send(errors);
+    return;
+  }
+
+  var expense = new Expense();
+  expense.name = req.body.name;
+  expense.amount = req.body.amount;
+  expense.user = req.body.user || req.user.id;
+  expense.dateRef = req.body.dateRef || new Date();
+  expense.budget = req.body.budget;
+  expense.note = req.body.note;
+
+  expense
+    .save()
+    .then(function(savedExpense){
+      res.json(savedExpense);
+      return;
+    })
+    .catch(function(err){
+      console.log(err);
+      res.status(500).send('uh, oh, something went wrong');
+      return err;
+    });
 
 };
 
