@@ -104,8 +104,8 @@ exports.addExpense = function(req, res) {
     .populate('expenses')
     .exec()
     .then(function(foundBudget) {
-      if (!foundBudget) {
-        res.status(400).send('No budget found');
+
+      if (!isValidBudget(req,res,foundBudget)) {
         return;
       }
       if (moment(foundBudget.timeEnd).isBefore(moment(expense.dateRef)) || moment(foundBudget.timeStart).isAfter(moment(expense.dateRef))) {
@@ -139,6 +139,51 @@ exports.updateExpense = function(req, res) {
 
 };
 
+exports.updateBudget = function(req, res) {
+  req.assert('timeEnd', 'Input Error').isDate();
+  var errors = req.validationErrors();
+  if (errors) {
+    res.status(400).send(errors);
+    return;
+  }
+
+  Budget.findById(req.params.id)
+    .populate('expenses')
+    .exec()
+    .then(function(foundBudget) {
+      if (!isValidBudget(req,res,foundBudget)) {
+        return;
+      }
+      foundBudget.timeEnd = req.body.timeEnd;
+      return foundBudget.save();
+    })
+    .then(function(savedBudget){
+      if (savedBudget){
+        res.json(savedBudget);
+      }
+      return;
+    })
+    .catch(function(err) {
+      console.log(err);
+      res.status(500).send('uh, oh, something went wrong');
+      return err;
+    });
+
+};
+
 function isBudgetOwner(budget, userid) {
   return R.contains(userid, budget.users);
+}
+
+function isValidBudget(req, res, budget) {
+  if (!budget) {
+    res.status(400).send('No budget found');
+    return false;
+  }
+  if (!isBudgetOwner(budget, req.user._id)) {
+    res.status(403).send('Only the owner can modify his budget');
+    return false;
+  }
+
+  return true;
 }

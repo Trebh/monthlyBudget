@@ -12,6 +12,7 @@
 
     vm.addExpense = addExpense;
     vm.createBudget = createBudget;
+    vm.deleteBudget = deleteBudget;
     vm.getBudget = getBudget;
 
     ///////////////////////////////////////////
@@ -46,6 +47,16 @@
 
     function addExpense(expName, expAmount, expDate, expBudget, expCat, expNote) {
       budgetService.addExpense(expName, expAmount, expDate, expBudget, expCat, expNote)
+        .then(function(res) {
+          console.log(res);
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
+    }
+
+    function deleteBudget(budgId){
+      budgetService.update(budgId, new Date())
         .then(function(res) {
           console.log(res);
         })

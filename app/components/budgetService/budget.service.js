@@ -11,6 +11,7 @@
     var service = {
       create: create,
       get: get,
+      update: update,
       addExpense: addExpense
     };
 
@@ -40,6 +41,14 @@
         user: user
       };
       return $http.post('http://' + appSettings.server + ':' + appSettings.apiPort + '/api/budgets/' + expBudget + '/expenses', data);
+    }
+
+    function update(budgetid, timeEnd){
+      var data = {
+        timeEnd: timeEnd
+      };
+
+      return $http.put('http://' + appSettings.server + ':' + appSettings.apiPort + '/api/budgets/' + budgetid, data);
     }
 
     return service;

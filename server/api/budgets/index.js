@@ -8,6 +8,7 @@ var router = express.Router();
 
 router.get('/', auth.isAuthenticated(), controller.search);
 router.get('/:id', auth.isAuthenticated(), controller.getBudget);
+router.put('/:id', auth.isAuthenticated(), controller.updateBudget);
 router.get('/:id/expenses/', auth.isAuthenticated(), controller.getBudgetExpenses);
 router.get('/:id/expenses/:id', auth.isAuthenticated(), controller.getExpense);
 router.post('/', auth.isAuthenticated(), controller.createBudget);
