@@ -15,6 +15,10 @@ exports.getBudget = function(req, res) {
     .populate('expenses')
     .exec()
     .then(function(foundBudget){
+      if (!isBudgetOwner(foundBudget, req.user._id)){
+        res.status(403).send('Only the owner can retrieve his budget');
+        return;
+      }
       res.json(foundBudget);
       return;
     })
@@ -111,3 +115,7 @@ exports.addExpense = function(req, res) {
 exports.updateExpense = function(req, res) {
 
 };
+
+function isBudgetOwner(budget, userid){
+  return R.contains(userid, budget.users);
+}

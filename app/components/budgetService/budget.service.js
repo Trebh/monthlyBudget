@@ -9,7 +9,8 @@
   function budgetService($http, $q, appSettings) {
 
     var service = {
-      create: create
+      create: create,
+      get: get
     };
 
     function create(name, amount, timeStart, timeEnd, expenses, users) {
@@ -22,6 +23,10 @@
         users: users || []
       };
       return $http.post('http://' + appSettings.server + ':' + appSettings.apiPort + '/api/budgets/', data);
+    }
+
+    function get(id){
+      return $http.get('http://' + appSettings.server + ':' + appSettings.apiPort + '/api/budgets/' + id);
     }
 
     return service;

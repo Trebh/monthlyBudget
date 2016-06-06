@@ -9,3 +9,6 @@
       %input{type: "date", label: "timeEnd", ng-model: "home.timeEnd"}
       %button{ng-click: "home.createBudget(home.name, home.amount, home.timeStart, home.timeEnd)"}
         crea budget
+      %input{type: "text", label: "budgId", ng-model: "home.getBudgId"}
+      %button{ng-click: "home.getBudget(home.getBudgId)"}
+        get budget
