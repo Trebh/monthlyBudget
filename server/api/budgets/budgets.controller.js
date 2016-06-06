@@ -2,6 +2,7 @@
 
 var Budget = require('../../model/budget').model;
 var Expense = require('../../model/expense').model;
+var utils = require('../utils/utils.service');
 
 var R = require('ramda');
 
@@ -14,15 +15,15 @@ exports.getBudget = function(req, res) {
   Budget.findById(req.params.id)
     .populate('expenses')
     .exec()
-    .then(function(foundBudget){
-      if (!isBudgetOwner(foundBudget, req.user._id)){
+    .then(function(foundBudget) {
+      if (!isBudgetOwner(foundBudget, req.user._id)) {
         res.status(403).send('Only the owner can retrieve his budget');
         return;
       }
       res.json(foundBudget);
       return;
     })
-    .catch(function(err){
+    .catch(function(err) {
       console.log(err);
       res.status(500).send('uh, oh, something went wrong');
       return;
@@ -82,7 +83,7 @@ exports.addExpense = function(req, res) {
   req.assert('user', 'Input Error').optional().isAscii().isAlphanumeric();
   req.assert('dateRef', 'Input Error').optional().isDate();
   req.assert('budget', 'Input Error').optional().isAscii().isAlphanumeric();
-  req.assert('note', 'Input Error').optional().isAscii().isAlphanumeric();
+  req.assert('note', 'Input Error').optional().isAscii();
 
   var errors = req.validationErrors();
   if (errors) {
@@ -97,11 +98,29 @@ exports.addExpense = function(req, res) {
   expense.dateRef = req.body.dateRef || new Date();
   expense.budget = req.body.budget || req.params.id;
   expense.note = req.body.note;
+  expense.deleted = false;
 
-  expense
-    .save()
-    .then(function(savedExpense) {
-      res.json(savedExpense);
+  Budget.findById(expense.budget)
+  .populate('expenses')
+    .exec()
+    .then(function(foundBudget) {
+      if (!foundBudget){
+        res.status(400).send('No budget found');
+        return;
+      }
+      var totExp = utils.sumAllExpenses(foundBudget);
+      if ((totExp + expense.amount) > foundBudget.amount){
+        res.status(400).send('Not enough budget');
+        return;
+      }
+      foundBudget.expenses.push(expense);
+      var saveProms = Promise.all([expense.save(), foundBudget.save()]);
+      return saveProms;
+    })
+    .then(function(results){
+      if (results){
+        res.json(results[0]);
+      }  
       return;
     })
     .catch(function(err) {
@@ -116,6 +135,6 @@ exports.updateExpense = function(req, res) {
 
 };
 
-function isBudgetOwner(budget, userid){
+function isBudgetOwner(budget, userid) {
   return R.contains(userid, budget.users);
 }

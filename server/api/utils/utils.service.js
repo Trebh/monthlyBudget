@@ -1,13 +1,12 @@
 'use strict';
 
-var config = require('../../../config/config').expressConfig;
-var compose = require('composable-middleware');
+var R = require('ramda');
 
-exports.isOwner = isOwner;
+module.exports = {
+  sumAllExpenses: sumAllExpenses
+};
 
-function isOwner() {
-  return compose()
-    .use(function(req, res, next) {
-      
-    });
+function sumAllExpenses(budget) {
+  //TODO check if not populated
+  return R.compose(R.sum, R.pluck('amount'))(budget.expenses);
 }

@@ -10,7 +10,8 @@
 
     var service = {
       create: create,
-      get: get
+      get: get,
+      addExpense: addExpense
     };
 
     function create(name, amount, timeStart, timeEnd, expenses, users) {
@@ -27,6 +28,18 @@
 
     function get(id){
       return $http.get('http://' + appSettings.server + ':' + appSettings.apiPort + '/api/budgets/' + id);
+    }
+
+    function addExpense(expName, expAmount, expDate, expBudget, expCat, expNote, user){
+      var data = {
+        amount: expAmount,
+        dateRef: expDate,
+        name: expName,
+        cathegory: expCat,
+        note: expNote,
+        user: user
+      };
+      return $http.post('http://' + appSettings.server + ':' + appSettings.apiPort + '/api/budgets/' + expBudget + '/expenses', data);
     }
 
     return service;

@@ -10,6 +10,7 @@
   function homeCtrl(budgetService) {
     var vm = this;
 
+    vm.addExpense = addExpense;
     vm.createBudget = createBudget;
     vm.getBudget = getBudget;
 
@@ -35,6 +36,16 @@
 
     function getBudget(id) {
       budgetService.get(id)
+        .then(function(res) {
+          console.log(res);
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
+    }
+
+    function addExpense(expName, expAmount, expDate, expBudget, expCat, expNote) {
+      budgetService.addExpense(expName, expAmount, expDate, expBudget, expCat, expNote)
         .then(function(res) {
           console.log(res);
         })
