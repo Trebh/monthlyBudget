@@ -3,7 +3,7 @@
 var Budget = require('../../model/budget').model;
 var Expense = require('../../model/expense').model;
 var utils = require('../utils/utils.service');
-
+var moment = require('moment');
 var R = require('ramda');
 
 exports.search = function(req, res) {
@@ -101,15 +101,19 @@ exports.addExpense = function(req, res) {
   expense.deleted = false;
 
   Budget.findById(expense.budget)
-  .populate('expenses')
+    .populate('expenses')
     .exec()
     .then(function(foundBudget) {
-      if (!foundBudget){
+      if (!foundBudget) {
         res.status(400).send('No budget found');
         return;
       }
+      if (moment(foundBudget.timeEnd).isBefore(moment(expense.dateRef)) || moment(foundBudget.timeStart).isAfter(moment(expense.dateRef))) {
+        res.status(400).send('Not time for this budget');
+        return;
+      }
       var totExp = utils.sumAllExpenses(foundBudget);
-      if ((totExp + expense.amount) > foundBudget.amount){
+      if ((totExp + expense.amount) > foundBudget.amount) {
         res.status(400).send('Not enough budget');
         return;
       }
@@ -117,10 +121,10 @@ exports.addExpense = function(req, res) {
       var saveProms = Promise.all([expense.save(), foundBudget.save()]);
       return saveProms;
     })
-    .then(function(results){
-      if (results){
+    .then(function(results) {
+      if (results) {
         res.json(results[0]);
-      }  
+      }
       return;
     })
     .catch(function(err) {
