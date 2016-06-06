@@ -10,6 +10,19 @@ exports.search = function(req, res) {
 };
 
 exports.getBudget = function(req, res) {
+  req.assert('id', 'Input Error').notEmpty().isInt();
+  Budget.findById(req.params.id)
+    .populate('expenses')
+    .exec()
+    .then(function(foundBudget){
+      res.json(foundBudget);
+      return;
+    })
+    .catch(function(err){
+      console.log(err);
+      res.status(500).send('uh, oh, something went wrong');
+      return;
+    });
 };
 
 exports.getBudgetExpenses = function(req, res) {
@@ -46,11 +59,11 @@ exports.createBudget = function(req, res) {
 
   budget
     .save()
-    .then(function(savedBudget){
+    .then(function(savedBudget) {
       res.json(savedBudget);
       return;
     })
-    .catch(function(err){
+    .catch(function(err) {
       console.log(err);
       res.status(500).send('uh, oh, something went wrong');
       return err;
@@ -64,7 +77,7 @@ exports.addExpense = function(req, res) {
   req.assert('amount', 'Input Error').notEmpty().isInt();
   req.assert('user', 'Input Error').optional().isAscii().isAlphanumeric();
   req.assert('dateRef', 'Input Error').optional().isDate();
-  req.assert('budget', 'Input Error').isAscii().isAlphanumeric();
+  req.assert('budget', 'Input Error').optional().isAscii().isAlphanumeric();
   req.assert('note', 'Input Error').optional().isAscii().isAlphanumeric();
 
   var errors = req.validationErrors();
@@ -78,23 +91,22 @@ exports.addExpense = function(req, res) {
   expense.amount = req.body.amount;
   expense.user = req.body.user || req.user.id;
   expense.dateRef = req.body.dateRef || new Date();
-  expense.budget = req.body.budget;
+  expense.budget = req.body.budget || req.params.id;
   expense.note = req.body.note;
 
   expense
     .save()
-    .then(function(savedExpense){
+    .then(function(savedExpense) {
       res.json(savedExpense);
       return;
     })
-    .catch(function(err){
+    .catch(function(err) {
       console.log(err);
       res.status(500).send('uh, oh, something went wrong');
       return err;
     });
 
 };
-
 
 exports.updateExpense = function(req, res) {
 

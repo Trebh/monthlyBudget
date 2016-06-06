@@ -11,8 +11,6 @@
     var vm = this;
 
     vm.createBudget = createBudget;
-    vm.title = 'allo allo';
-
 
     ///////////////////////////////////////////
 

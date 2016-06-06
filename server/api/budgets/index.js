@@ -10,7 +10,7 @@ router.get('/', auth.isAuthenticated(), controller.search);
 router.get('/:id', auth.isAuthenticated(), controller.getBudget);
 router.get('/:id/expenses/', auth.isAuthenticated(), controller.getBudgetExpenses);
 router.get('/:id/expenses/:id', auth.isAuthenticated(), controller.getExpense);
-router.post('/', controller.createBudget);
+router.post('/', auth.isAuthenticated(), controller.createBudget);
 router.post('/:id/expenses/', auth.isAuthenticated(), controller.addExpense);
 router.put('/:id/expenses/:id', auth.isAuthenticated(), controller.updateExpense);
 

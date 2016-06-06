@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var expense = new Schema({
+  name: String,
   amount: Number,
   user: {
     type: Schema.Types.ObjectId,

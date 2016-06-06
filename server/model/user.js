@@ -14,7 +14,9 @@ var user = new Schema({
   budgets: [{
     type: Schema.Types.ObjectId,
     ref: 'Budget'
-  }]
+  }],
+  google: {},
+  role: String
 });
 
 var User = mongoose.model('User', user);
