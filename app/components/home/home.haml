@@ -1,30 +1,32 @@
-%body
-  .home__container
-    Monthly Budget
-    
-    .home__budgetTestContainer
-      %input{type: "text", label: "name", ng-model: "home.name"}
-      %input{type: "text", label: "amount", ng-model: "home.amount"}
-      %input{type: "date", label: "timeStart", ng-model: "home.timeStart"}
-      %input{type: "date", label: "timeEnd", ng-model: "home.timeEnd"}
-      %button{ng-click: "home.createBudget(home.name, home.amount, home.timeStart, home.timeEnd)"}
-        crea budget
-      %br
-      %input{type: "text", label: "budgId", ng-model: "home.getBudgId"}
-      %button{ng-click: "home.getBudget(home.getBudgId)"}
-        get budget
-      %br
-      %input{type: "text", label: "name", ng-model: "home.expName"}
-      %input{type: "text", label: "amount", ng-model: "home.expAmount"}
-      %input{type: "date", label: "dateRef", ng-model: "home.expDate"}
-      %input{type: "text", label: "budget", ng-model: "home.expBudget"}
-      %input{type: "text", label: "cathegory", ng-model: "home.expCat"}
-      %input{type: "text", label: "note", ng-model: "home.expNote"}
-      %button{ng-click: "home.addExpense(home.expName, home.expAmount, home.expDate, home.expBudget, home.expCat, home.expNote)"}
-        aggiungi spesa budget
+.home__container
 
-      %br
-      %input{type: "text", label: "budgId", ng-model: "home.delBudgId"}
-      %button{ng-click: "home.deleteBudget(home.delBudgId)"}
-        del budget
-      %br  
+  .home__leftMenu
+
+  .home__board
+
+    -# .home__budgetTestContainer
+    -#   %input{type: "text", label: "name", ng-model: "home.name"}
+    -#   %input{type: "text", label: "amount", ng-model: "home.amount"}
+    -#   %input{type: "date", label: "timeStart", ng-model: "home.timeStart"}
+    -#   %input{type: "date", label: "timeEnd", ng-model: "home.timeEnd"}
+    -#   %button{ng-click: "home.createBudget(home.name, home.amount, home.timeStart, home.timeEnd)"}
+    -#     crea budget
+    -#   %br
+    -#   %input{type: "text", label: "budgId", ng-model: "home.getBudgId"}
+    -#   %button{ng-click: "home.getBudget(home.getBudgId)"}
+    -#     get budget
+    -#   %br
+    -#   %input{type: "text", label: "name", ng-model: "home.expName"}
+    -#   %input{type: "text", label: "amount", ng-model: "home.expAmount"}
+    -#   %input{type: "date", label: "dateRef", ng-model: "home.expDate"}
+    -#   %input{type: "text", label: "budget", ng-model: "home.expBudget"}
+    -#   %input{type: "text", label: "cathegory", ng-model: "home.expCat"}
+    -#   %input{type: "text", label: "note", ng-model: "home.expNote"}
+    -#   %button{ng-click: "home.addExpense(home.expName, home.expAmount, home.expDate, home.expBudget, home.expCat, home.expNote)"}
+    -#     aggiungi spesa budget
+
+    -#   %br
+    -#   %input{type: "text", label: "budgId", ng-model: "home.delBudgId"}
+    -#   %button{ng-click: "home.deleteBudget(home.delBudgId)"}
+    -#     del budget
+    -#   %br  
