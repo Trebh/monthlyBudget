@@ -11,9 +11,13 @@
     var vm = this;
 
     vm.addExpense = addExpense;
+    vm.budgets = [];
+    vm.expenses = [];
     vm.createBudget = createBudget;
     vm.deleteBudget = deleteBudget;
     vm.getBudget = getBudget;
+    vm.listExpenses = listExpenses;
+    vm.listMyBudgets = listMyBudgets;
 
     ///////////////////////////////////////////
 
@@ -63,6 +67,20 @@
         .catch(function(err) {
           console.log(err);
         });
+    }
+
+    function listMyBudgets(){
+      budgetService.getAll()
+        .then(function(res) {
+          vm.budgets = res.data;
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
+    }
+
+    function listExpenses(budget){
+      vm.expenses = budget.expenses;
     }
   }
 

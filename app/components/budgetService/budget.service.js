@@ -12,7 +12,8 @@
       create: create,
       get: get,
       update: update,
-      addExpense: addExpense
+      addExpense: addExpense,
+      getAll: getAll
     };
 
     function create(name, amount, timeStart, timeEnd, expenses, users) {
@@ -49,6 +50,10 @@
       };
 
       return $http.put('http://' + appSettings.server + ':' + appSettings.apiPort + '/api/budgets/' + budgetid, data);
+    }
+
+    function getAll(){
+      return $http.get('http://' + appSettings.server + ':' + appSettings.apiPort + '/api/budgets');
     }
 
     return service;

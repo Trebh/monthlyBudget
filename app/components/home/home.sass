@@ -9,14 +9,17 @@
   flex-direction: row
 
   .home__leftMenu
-    background-color: yellow
+    background-color: $primary-color
     width: 150px
     height: 100%
 
   .home__board
-    background-color: red
+    background-color: $bg-color
     width: calc(100% - 150px)
     height: 100%
+    display:flex
+    flex-direction: row
+    
 
 @include media(max-width 800px)
   .home__container

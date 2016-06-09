@@ -1,9 +1,25 @@
 .home__container
 
   .home__leftMenu
+    %button#home__listBudgets{ng-click: "home.listMyBudgets()"}
+        Mostra i miei budget
 
   .home__board
+    %div.home__budgetsContainer{ng-if:"home.budgets.length"}
+        %div.home__budgetItem{ng-repeat:"budgetItem in home.budgets"}
+            %div.home__budgetName
+                {{budgetItem.name}}
+            %div.home__budgetAmount
+                {{budgetItem.amount}}
+            %button.home__listExpenses{ng-click:"home.listExpenses(budgetItem)"}
+                elenca spese
 
+    %div.home__expensesContainer{ng-if:"home.expenses.length"}
+        %div.home__expenseItem{ng-repeat:"expenseItem in home.expenses"}
+            %div.home__expenseName
+                {{expenseItem.name}}
+            %div.home__expenseAmount
+                {{expenseItem.amount}}
     -# .home__budgetTestContainer
     -#   %input{type: "text", label: "name", ng-model: "home.name"}
     -#   %input{type: "text", label: "amount", ng-model: "home.amount"}

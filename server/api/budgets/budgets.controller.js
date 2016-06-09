@@ -7,7 +7,18 @@ var moment = require('moment');
 var R = require('ramda');
 
 exports.search = function(req, res) {
-
+  Budget.find({users: req.user._id})
+    .populate('expenses')
+    .exec()
+    .then(function(foundBudgets) {
+      res.json(foundBudgets);
+      return;
+    })
+    .catch(function(err) {
+      console.log(err);
+      res.status(500).send('uh, oh, something went wrong');
+      return;
+    });
 };
 
 exports.getBudget = function(req, res) {
