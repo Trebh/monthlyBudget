@@ -21,6 +21,7 @@
     vm.listExpenses = listExpenses;
     vm.listMyBudgets = listMyBudgets;
     vm.newBudget = openNewBudgetModal;
+    vm.selectedBudget = {};
 
     ///////////////////////////////////////////
 
@@ -84,6 +85,7 @@
 
     function listExpenses(budget) {
       vm.expenses = budget.expenses;
+      vm.selectedBudget = budget;
     }
 
     function calcTotExpense(budget) {

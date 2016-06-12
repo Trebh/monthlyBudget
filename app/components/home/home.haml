@@ -1,7 +1,7 @@
 .home__container
-  .home__board
+  .home__board{ng-class:"home.expenses.length ? 'home__budgetRestricted' : 'home__budgetOpen'"}
     %div.home__budgetsContainer{ng-if:"home.budgets.length"}
-        %div.home__budgetItem{ng-repeat:"budgetItem in home.budgets"}
+        %div.home__budgetItem{ng-repeat:"budgetItem in home.budgets", ng-class:"(home.selectedBudget._id === budgetItem._id) ? 'home__selected' : ''"}
             %div.home__budgetName
                 {{budgetItem.name}}
             %div.home__budgetAmount
