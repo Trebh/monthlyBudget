@@ -1,0 +1,34 @@
+.newBudgetModal__container
+  height: 100%
+  width: 100%
+
+  .newBudgetModal__header
+    height: 50px
+    text-transform: uppercase
+    font-size: 20px
+    text-align: center
+    line-height: 50px
+  
+  .newBudgetModal__body
+    height: calc(80% - 50px)
+    width: 100%
+    @include align-items(center)
+    @include display(flex)
+    @include flex-direction(column)
+    @include justify-content(center)
+
+    .newBudgetModal__formContainer
+      width: 90%
+      height: 90%
+      input
+        float: left
+        width: 70%
+      label
+        float: left
+        width: 20%
+      input,label
+        margin-top: 10px
+        margin-bottom: 10px
+
+  .newBudgetModal__footer
+    height: 20%

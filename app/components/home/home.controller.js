@@ -5,19 +5,22 @@
   angular.module('monthlyBudget')
     .controller('homeCtrl', homeCtrl);
 
-  homeCtrl.$inject = ['budgetService'];
+  homeCtrl.$inject = ['budgetService', 'Popeye'];
 
-  function homeCtrl(budgetService) {
+  function homeCtrl(budgetService, Popeye) {
     var vm = this;
 
     vm.addExpense = addExpense;
     vm.budgets = [];
     vm.expenses = [];
+    vm.calcTotExpense = calcTotExpense;
+    vm.calcPercUsed = calcPercUsed;
     vm.createBudget = createBudget;
     vm.deleteBudget = deleteBudget;
     vm.getBudget = getBudget;
     vm.listExpenses = listExpenses;
     vm.listMyBudgets = listMyBudgets;
+    vm.newBudget = openNewBudgetModal;
 
     ///////////////////////////////////////////
 
@@ -26,7 +29,7 @@
     ///////////////////////////////////////////
 
     function init() {
-
+      listMyBudgets();
     }
 
     function createBudget(name, amount, timeStart, timeEnd) {
@@ -59,7 +62,7 @@
         });
     }
 
-    function deleteBudget(budgId){
+    function deleteBudget(budgId) {
       budgetService.update(budgId, new Date())
         .then(function(res) {
           console.log(res);
@@ -69,7 +72,7 @@
         });
     }
 
-    function listMyBudgets(){
+    function listMyBudgets() {
       budgetService.getAll()
         .then(function(res) {
           vm.budgets = res.data;
@@ -79,8 +82,36 @@
         });
     }
 
-    function listExpenses(budget){
+    function listExpenses(budget) {
       vm.expenses = budget.expenses;
+    }
+
+    function calcTotExpense(budget) {
+      budget.expenses = budget.expenses || [];
+      var totExpense = budget.expenses
+        .map(function(exp) {
+          return exp.amount;
+        })
+        .reduce(function(a, b) {
+          return a + b;
+        },0);
+
+      return totExpense;
+    }
+
+    function calcPercUsed(budget) {
+      var percUsed = calcTotExpense(budget) / budget.amount * 100;
+      return percUsed;
+    }
+
+    function openNewBudgetModal() {
+      var modal = Popeye.openModal({
+        templateUrl: '/dist/html/newBudgetModal/newBudgetModal.html',
+        controller: 'newBudgetModalCtrl as budgetModal'
+      });
+      modal.closed.then(function(res) {
+        vm.budgets.unshift(res);
+      });
     }
   }
 

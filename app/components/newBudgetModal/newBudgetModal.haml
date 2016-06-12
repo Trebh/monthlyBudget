@@ -1,0 +1,28 @@
+.newBudgetModal__container
+
+  .newBudgetModal__header
+    Crea un nuovo budget
+  .newBudgetModal__body
+    .newBudgetModal__formContainer
+      %form{novalidate:"", name:"newBudgetForm"}
+        %label{for: "budgetName"}
+          Nome
+        %input{type: "text", ng-model: "budgetModal.name", name: "budgetName", text:""}
+        %br
+        %label{for: "budgetAmount"}
+          Valore
+        %input{type: "text", name: "budgetAmount", ng-model: "budgetModal.amount"}(number)
+        %br
+        %label{for: "budgetTimeStart"}
+          Data inizio
+        %input{type: "date", name: "budgetTimeStart", ng-model: "budgetModal.timeStart", date:""}
+        %br
+        %label{for: "budgetTimeEnd"}
+          Data fine
+        %input{type: "date", name: "budgetTimeEnd", ng-model: "budgetModal.timeEnd", date:""}
+
+  .newBudgetModal__footer
+    %button.newBudgetModal__undo{ng-click:"budgetModal.cancel()"}
+      Cancella
+    %button.newBudgetModal__confirm{ng-click:"budgetModal.createBudget(budgetModal.name, budgetModal.amount, budgetModal.timeStart, budgetModal.timeEnd)"}
+      OK

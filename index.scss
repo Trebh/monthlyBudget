@@ -7,6 +7,15 @@
 @import 'app/common/variables.sass';
 @import 'app/common/main.sass';
 @import 'app/components/home/home.sass';
+@import 'app/components/newBudgetModal/newBudgetModal.sass';
+
+*:focus {
+    outline: 0;
+}
+
+textarea:focus, input:focus{
+    outline: 0;
+}
 
 .main{
   position: absolute;
@@ -23,6 +32,9 @@
   position: absolute;
   top: 0;
   left: 0;
+  text-align: center;
+  line-height: 70px;
+  font-size: 40px;
 }
 
 .mainViewContainer{

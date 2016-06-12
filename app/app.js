@@ -1,7 +1,9 @@
 (function() {
   'use strict';
 
-  angular.module('monthlyBudget', ['ui.router', 'ngCookies'])
+  angular.module('monthlyBudget', ['ui.router', 
+    'ngCookies',
+    'pathgather.popeye'])
     .config(configure)
     .run(runBlock)
     .factory('authInterceptor', authInterceptor);
