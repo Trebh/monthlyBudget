@@ -32,12 +32,12 @@
       return $http.get('http://' + appSettings.server + ':' + appSettings.apiPort + '/api/budgets/' + id);
     }
 
-    function addExpense(expName, expAmount, expDate, expBudget, expCat, expNote, user){
+    function addExpense(expBudget, expName, expAmount, expDate, expCat, expNote, user){
       var data = {
         amount: expAmount,
         dateRef: expDate,
         name: expName,
-        cathegory: expCat,
+        expCat: expCat,
         note: expNote,
         user: user
       };

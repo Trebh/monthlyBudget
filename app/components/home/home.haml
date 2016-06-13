@@ -1,7 +1,7 @@
 .home__container
   .home__board{ng-class:"home.expenses.length ? 'home__budgetRestricted' : 'home__budgetOpen'"}
     %div.home__budgetsContainer{ng-if:"home.budgets.length"}
-        %div.home__budgetItem{ng-repeat:"budgetItem in home.budgets", ng-class:"(home.selectedBudget._id === budgetItem._id) ? 'home__selected' : ''"}
+        %div.home__budgetItem{ng-repeat:"budgetItem in home.budgets", ng-class:"(home.selectedBudget._id === budgetItem._id) ? 'home__selected' : ''", ng-click:"home.listExpenses(budgetItem)"}
             %div.home__budgetName
                 {{budgetItem.name}}
             %div.home__budgetAmount
@@ -10,8 +10,10 @@
                 {{home.calcTotExpense(budgetItem)}}
             %div.home__percUsed 
                 {{home.calcPercUsed(budgetItem)}}%
-            %button.home__listExpenses{ng-click:"home.listExpenses(budgetItem)"}
-                elenca spese
+            %div.home__timeStart
+                dal {{budgetItem.timeStart | date}}
+            %div.home__timeEnd
+                al {{budgetItem.timeEnd | date}}
 
     %div.home__expensesContainer{ng-if:"home.expenses.length"}
         %div.home__expenseItem{ng-repeat:"expenseItem in home.expenses"}
@@ -19,9 +21,17 @@
                 {{expenseItem.name}}
             %div.home__expenseAmount
                 {{expenseItem.amount}}
+            %div.home__expenseDateRef
+                {{expenseItem.dateRef | date}}
+            %div.home__expenseCar
+                {{expenseItem.cathegory}}
+            %div.home__expenseNote
+                {{expenseItem.note}}
 
-    %button.home__addBudget{ng-click:"home.newBudget()"}
+    %button.home__add{ng-click:"home.openNewBudgetModal()"}
         +
+    %button.home__add.home__addExpense{ng-click:"home.openNewExpenseModal()"}
+        S
     -# .home__budgetTestContainer
     -#   %input{type: "text", label: "name", ng-model: "home.name"}
     -#   %input{type: "text", label: "amount", ng-model: "home.amount"}

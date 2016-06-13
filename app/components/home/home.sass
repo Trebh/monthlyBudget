@@ -19,7 +19,7 @@
   @include align-items(center)
   @include display(flex)
   @include flex-direction(column)
-  @include justify-content(space-around)
+  @include justify-content(flex-start)
   width: 100%
   height: 100%
 
@@ -38,8 +38,24 @@
 
 .home__budgetItem.home__selected
   background-color: tint($warn, 20%)
+
+.home__expensesContainer
+  @include align-items(center)
+  @include display(flex)
+  @include flex-direction(column)
+  @include justify-content(flex-start)
+  width: 50%
+  height: 100%
+
+  .home__expenseItem
+    width: 70%
+    position: relative
+    border-bottom: 1px solid #000
+
+  div
+    margin: 20px
   
-.home__addBudget
+.home__add
   border-radius: 9999px
   height: 50px
   width: 50px
@@ -52,8 +68,9 @@
   bottom: 20px
   right: 20px
   font-size: 30px
-
-.home__addBudget:hover
+.home__add.home__addExpense
+  bottom: 80px
+.home__add:hover
   background-color: tint($bg-color, 10%)
 
 .home__board.home__budgetRestricted

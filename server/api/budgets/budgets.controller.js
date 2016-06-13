@@ -89,11 +89,12 @@ exports.createBudget = function(req, res) {
 
 exports.addExpense = function(req, res) {
 
-  req.assert('name', 'Input Error').isAscii().isAlphanumeric();
+  req.assert('name', 'Input Error').isAscii();
   req.assert('amount', 'Input Error').notEmpty().isInt();
   req.assert('user', 'Input Error').optional().isAscii().isAlphanumeric();
   req.assert('dateRef', 'Input Error').optional().isDate();
   req.assert('budget', 'Input Error').optional().isAscii().isAlphanumeric();
+  req.assert('expCat', 'Input Error').optional().isAscii();
   req.assert('note', 'Input Error').optional().isAscii();
 
   var errors = req.validationErrors();
@@ -108,6 +109,7 @@ exports.addExpense = function(req, res) {
   expense.user = req.body.user || req.user.id;
   expense.dateRef = req.body.dateRef || new Date();
   expense.budget = req.body.budget || req.params.id;
+  expense.cathegory = req.body.expCat;
   expense.note = req.body.note;
   expense.deleted = false;
 

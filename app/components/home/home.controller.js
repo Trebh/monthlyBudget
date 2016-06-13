@@ -20,7 +20,8 @@
     vm.getBudget = getBudget;
     vm.listExpenses = listExpenses;
     vm.listMyBudgets = listMyBudgets;
-    vm.newBudget = openNewBudgetModal;
+    vm.openNewBudgetModal = openNewBudgetModal;
+    vm.openNewExpenseModal = openNewExpenseModal;
     vm.selectedBudget = {};
 
     ///////////////////////////////////////////
@@ -112,7 +113,27 @@
         controller: 'newBudgetModalCtrl as budgetModal'
       });
       modal.closed.then(function(res) {
-        vm.budgets.unshift(res);
+        if (res.name){
+          vm.budgets.unshift(res);
+        }
+      });
+    }
+
+    function openNewExpenseModal(){
+      if (!vm.selectedBudget._id){
+        return;
+      }
+      var modal = Popeye.openModal({
+        templateUrl: '/dist/html/newExpenseModal/newExpenseModal.html',
+        controller: 'newExpenseModalCtrl as expenseModal',
+        locals: {
+          selectedBudget: vm.selectedBudget
+        }
+      });
+      modal.closed.then(function(res) {
+        if (res.name){
+          vm.selectedBudget.expenses.unshift(res);
+        }
       });
     }
   }

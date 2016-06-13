@@ -1,0 +1,32 @@
+.newExpenseModal__container
+
+  .newExpenseModal__header
+    Aggiungi una spesa al budget selezionato
+  .newExpenseModal__body
+    .newExpenseModal__formContainer
+      %form{novalidate:"", name:"newexpenseForm"}
+        %label{for: "expenseName"}
+          Nome
+        %input{type: "text", ng-model: "expenseModal.name", name: "expenseName", text:""}
+        %br
+        %label{for: "expenseAmount"}
+          Valore
+        %input{type: "text", name: "expenseAmount", ng-model: "expenseModal.amount"}(number)
+        %br
+        %label{for: "expenseDateRef"}
+          Data di riferimento
+        %input{type: "date", name: "expenseDateRef", ng-model: "expenseModal.dateRef", date:""}
+        %br
+        %label{for: "expenseCat"}
+          Categoria
+        %input{type: "text", name: "expenseCat", ng-model: "expenseModal.expCat"}
+        %br
+        %label{for: "expenseNote"}
+          Note
+        %input{type: "text", name: "expenseNote", ng-model: "expenseModal.note"}
+
+  .newExpenseModal__footer
+    %button.newExpenseModal__undo{ng-click:"expenseModal.cancel()"}
+      Cancella
+    %button.newExpenseModal__confirm{ng-click:"expenseModal.createExpense(expenseModal.name, expenseModal.amount, expenseModal.dateRef, expenseModal.expCat, expenseModal.note)"}
+      OK
